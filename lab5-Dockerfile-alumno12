@@ -1,0 +1,27 @@
+# Utilizamos una imagen de Python con una versión de este en concreto
+
+FROM  docker.io/library/python:3.11-slim
+
+# Creamos un nuevo directorio al cual llamamos "/app"
+
+RUN mkdir /app
+
+# Cargamos las librerías que vamos a necesitar para ejecutar nuestro archivo "ipynb"
+
+RUN pip install jupyter 
+RUN pip install numpy
+RUN pip install numba
+
+# Ahora, lo que hacemos es copiar el archivo "pi.ipynb" a la imagen, concretamente, al subdirectorio "app"
+
+# Para ello, debemos tener el archivo "pi.ipynb" en el directorio actual a la hora de crear la imagen mediante el fichero DOCKERFILE
+
+COPY pi.ipynb /app/
+
+WORKDIR /app 
+
+# Finalmente, como ya tenemos, un entorno de Python, con todas las librerías necesarias, y además tenemos el archivo ".ipynb" que vamos a ejecutar, podemos proceder a crear la imagen
+
+CMD ["ipython", "pi.ipynb", "10**5"]
+
+
